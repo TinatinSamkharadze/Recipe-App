@@ -1,32 +1,41 @@
-import android.app.AlertDialog
+// ui/main/AddRecipeDialog.kt
+package com.example.recipeapp.ui.main
+
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.example.recipeapp.R
-import com.example.recipeapp.data.model.Recipe
+import com.example.recipeapp.databinding.DialogAddRecipeBinding
+import com.example.recipeapp.ui.adapter.RecipeAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class AddRecipeDialog(private val onRecipeAdded: (Recipe) -> Unit) : DialogFragment() {
+class AddRecipeDialog : DialogFragment() {
+
+    private lateinit var binding: DialogAddRecipeBinding
+    private var onAddRecipe: ((title: String, description: String, imageUrl: String) -> Unit)? = null
+
+    fun setOnAddRecipeListener(listener: (title: String, description: String, imageUrl: String) -> Unit) {
+        onAddRecipe = listener
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(requireContext())
-        val view = LayoutInflater.from(context).inflate(R.layout.dialog_add_recipe, null)
+        binding = DialogAddRecipeBinding.inflate(requireActivity().layoutInflater)
 
-        val titleInput = view.findViewById<EditText>(R.id.etTitle)
-        val descInput = view.findViewById<EditText>(R.id.etDescription)
-
-        builder.setView(view)
-            .setTitle("Add Recipe")
+        return AlertDialog.Builder(requireContext())
+            .setView(binding.root)
+            .setTitle("Add New Recipe")
             .setPositiveButton("Add") { _, _ ->
-                val recipe = Recipe(
-                    title = titleInput.text.toString(),
-                    description = descInput.text.toString(),
-                    imageUrl = ""
-                )
-                onRecipeAdded(recipe)
-            }
-            .setNegativeButton("Cancel", null)
+                val title = binding.titleEditText.text.toString()
+                val description = binding.descriptionEditText.text.toString()
+                val imageUrl = binding.imageUrlEditText.text.toString()
 
-        return builder.create()
+                if (title.isNotBlank() && description.isNotBlank()) {
+                    onAddRecipe?.invoke(title, description, imageUrl)
+                }
+            }
+            .setNegativeButton("Cancel") { _, _ -> }
+            .create()
     }
 }
+

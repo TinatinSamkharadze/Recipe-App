@@ -1,34 +1,46 @@
+// viewmodel/HomeViewModel.kt
 package com.example.recipeapp.viewmodel
-import androidx.lifecycle.liveData
+
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import com.example.recipeapp.data.db.AppDatabase
 import com.example.recipeapp.data.model.Recipe
 import com.example.recipeapp.data.repository.RecipeRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val repository: RecipeRepository
+) : ViewModel() {
+
+    private val _recipes = MutableStateFlow<List<Recipe>>(emptyList())
+    val recipes: StateFlow<List<Recipe>> = _recipes
 
     init {
-        val recipeDao = AppDatabase.getDatabase(application).recipeDao()
-        repository = RecipeRepository(recipeDao)
+        loadRecipes()
     }
 
-    fun addRecipe(recipe: Recipe) = viewModelScope.launch {
-        repository.insertRecipe(recipe)
+    private fun loadRecipes() {
+        viewModelScope.launch {
+            repository.getAllRecipes().collect { recipes ->
+                _recipes.value = recipes
+            }
+        }
     }
 
-    fun getFavorites(): LiveData<List<Recipe>> = liveData {
-        emit(repository.getFavoriteRecipes())
-    }
-
-    fun getRecipes(): LiveData<List<Recipe>> = liveData {
-        emit(repository.getAllRecipes())
+    fun addRecipe(title: String, description: String, imageUrl: String) {
+        val recipe = Recipe(
+            id = (_recipes.value.maxByOrNull { it.id }?.id ?: 0) + 1,
+            title = title,
+            description = description,
+            image = imageUrl.ifBlank { "https://placehold.co/600x400" }
+        )
+        viewModelScope.launch {
+            repository.insertRecipe(recipe)
+        }
     }
 }
-
-
-

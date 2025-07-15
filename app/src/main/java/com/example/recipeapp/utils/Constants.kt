@@ -1,4 +1,6 @@
+// utils/Constants.kt
 package com.example.recipeapp.utils
 
-class Constants {
+object Constants {
+    const val DATABASE_NAME = "recipes_db"
 }

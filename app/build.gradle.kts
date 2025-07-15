@@ -1,9 +1,12 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
-
+    id ("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-kapt")
 }
+
 
 android {
     namespace = "com.example.recipeapp"
@@ -39,7 +42,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
-
+    kapt {
+        correctErrorTypes = true
+    }
 
 }
 
@@ -57,14 +62,23 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
 
-    implementation("androidx.room:room-runtime:2.5.2")
+    implementation("androidx.room:room-runtime:2.6.1")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
-    kapt ("androidx.room:room-compiler:2.5.2")
 
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-    implementation ("androidx.room:room-ktx:2.5.2")
+    implementation("javax.inject:javax.inject:1")
+    implementation ("com.google.dagger:hilt-android:2.51.1")
+    kapt ("com.google.dagger:hilt-android-compiler:2.51.1")
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
+
+
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    kapt("androidx.room:room-compiler:2.6.1")
 }

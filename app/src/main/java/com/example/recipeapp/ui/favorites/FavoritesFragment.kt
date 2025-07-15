@@ -1,5 +1,5 @@
-// ui/home/HomeFragment.kt
-package com.example.recipeapp.ui.home
+// ui/favorites/FavoritesFragment.kt
+package com.example.recipeapp.ui.favorites
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,19 +10,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.recipeapp.databinding.FragmentHomeBinding
+import com.example.recipeapp.databinding.FragmentFavoritesBinding
 import com.example.recipeapp.ui.adapter.RecipeAdapter
-import com.example.recipeapp.ui.main.AddRecipeDialog
-import com.example.recipeapp.viewmodel.HomeViewModel
+import com.example.recipeapp.viewmodel.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
+class FavoritesFragment : Fragment() {
+
+    private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: FavoritesViewModel by viewModels()
     private lateinit var adapter: RecipeAdapter
 
     override fun onCreateView(
@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,36 +38,27 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
-        observeRecipes()
-        initListeners()
+        observeFavorites()
     }
 
     private fun initRecyclerView() {
         adapter = RecipeAdapter { recipeId ->
-            val action = HomeFragmentDirections.actionHomeFragmentToRecipeDetailsFragment(recipeId)
+            val action = FavoritesFragmentDirections.actionFavoritesFragmentToRecipeDetailsFragment(recipeId)
             findNavController().navigate(action)
         }
 
-
-        binding.recipesRecyclerView.apply {
+        binding.favoritesRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@HomeFragment.adapter
+            adapter = this@FavoritesFragment.adapter
         }
     }
 
-    private fun observeRecipes() {
+    private fun observeFavorites() {
         lifecycleScope.launch {
-            viewModel.recipes.collect { recipes ->
+            viewModel.favoriteRecipes.collect { recipes ->
                 adapter.submitList(recipes)
                 binding.emptyState.visibility = if (recipes.isEmpty()) View.VISIBLE else View.GONE
             }
-        }
-    }
-
-    private fun initListeners() {
-        binding.addRecipeFab.setOnClickListener {
-            // Show add recipe dialog
-            AddRecipeDialog().show(childFragmentManager, "AddRecipeDialog")
         }
     }
 
