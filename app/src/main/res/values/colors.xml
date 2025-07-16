@@ -1,5 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Existing colors -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- New colors for your app -->
+    <color name="dark_background">#1A1A1A</color>
+    <color name="red_primary">#FF6B6B</color>
+    <color name="light_gray">#B0B0B0</color>
+    <color name="gray">#606060</color>
+    <color name="yellow">#FFD700</color>
+    <color name="background_light"></color>
+    <!-- Primary Colors -->
+    <color name="primary_color">#667eea</color>
+    <color name="primary_dark">#4c63d2</color>
+    <color name="primary_light">#8fa2f7</color>
+
+    <!-- Secondary Colors -->
+    <color name="secondary_color">#764ba2</color>
+    <color name="secondary_dark">#5d3a82</color>
+    <color name="secondary_light">#9668c2</color>
+
+    <!-- Background Colors -->
+    <color name="background_dark">#212529</color>
+    <color name="surface_color">#ffffff</color>
+
+
+    <!-- Text Colors -->
+    <color name="text_primary">#2d3748</color>
+    <color name="text_secondary">#718096</color>
+    <color name="text_hint">#a0aec0</color>
+    <color name="text_on_primary">#ffffff</color>
+
+    <!-- Search Colors -->
+    <color name="search_background">#f7fafc</color>
+    <color name="search_border">#e2e8f0</color>
+
+    <!-- Icon Colors -->
+    <color name="icon_tint">#a0aec0</color>
+    <color name="favorite_color">#e53e3e</color>
+    <color name="rating_star">#ffd700</color>
+
+    <!-- Category Colors -->
+    <color name="category_icon_background">#667eea</color>
+    <color name="category_salad">#48bb78</color>
+    <color name="category_breakfast">#ed8936</color>
+    <color name="category_appetizer">#38b2ac</color>
+    <color name="category_noodle">#9f7aea</color>
+
+    <!-- Status Colors -->
+    <color name="success_color">#48bb78</color>
+    <color name="warning_color">#ed8936</color>
+    <color name="error_color">#e53e3e</color>
+    <color name="info_color">#2196F3</color>
+
+<!--    <selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--        <item android:color="@color/primary_color" android:state_checked="true" />-->
+<!--        <item android:color="@color/text_secondary" android:state_checked="false" />-->
+<!--    </selector>-->
 </resources>
+

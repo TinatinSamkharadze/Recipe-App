@@ -3,9 +3,16 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home"
-        android:title="Recipes" />
+        android:title="Home" />
+
     <item
-        android:id="@+id/favoritesFragment"
-        android:icon="@drawable/ic_favorite"
+        android:id="@+id/favoriteFragment"
+        android:icon="@drawable/ic_favorite_filled"
         android:title="Favorites" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile" />
+
 </menu>

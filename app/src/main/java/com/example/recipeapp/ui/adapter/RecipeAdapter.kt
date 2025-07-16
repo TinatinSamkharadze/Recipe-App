@@ -31,13 +31,20 @@ class RecipeAdapter(
 
         fun bind(recipe: Recipe) {
             binding.root.setOnClickListener { onClick(recipe.id) }
-            binding.title.text = recipe.title
-            binding.description.text = recipe.description
 
+            // Use the correct binding properties from your XML
+            binding.tvRecipeTitle.text = recipe.title
+            binding.tvRecipeDescription.text = recipe.description
+
+            // Load image using Glide
             Glide.with(binding.root)
                 .load(recipe.image)
                 .centerCrop()
-                .into(binding.imageView)
+                .into(binding.ivRecipeImage)
+
+            // If your Recipe model has cooking time and rating, you can also bind them:
+            // binding.tvCookingTime.text = recipe.cookingTime
+            // binding.tvRating.text = recipe.rating.toString()
         }
     }
 
