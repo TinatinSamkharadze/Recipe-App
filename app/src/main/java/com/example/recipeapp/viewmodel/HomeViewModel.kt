@@ -41,10 +41,10 @@ class HomeViewModel @Inject constructor(
         _isSearching.value = true
 
         if (query.isBlank()) {
-            // If query is empty, show all recipes
+
             _recipes.value = _allRecipes.value
         } else {
-            // Filter recipes based on title and description
+
             val filteredRecipes = _allRecipes.value.filter { recipe ->
                 recipe.title.contains(query, ignoreCase = true) ||
                         recipe.description.contains(query, ignoreCase = true)
@@ -72,17 +72,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    // Optional: Get trending recipes (first 5 or most recent)
+
     fun getTrendingRecipes(): List<Recipe> {
         return _allRecipes.value.take(5)
     }
 
-    // Optional: Get recipes by category if you implement categories
+
     fun getRecipesByCategory(category: String): List<Recipe> {
         return _allRecipes.value.filter { recipe ->
-            // Assuming you add a category field to your Recipe model
-            // recipe.category == category
-            true // Placeholder for now
+            true
         }
     }
 }
